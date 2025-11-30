@@ -1,3 +1,6 @@
+import { Badge } from "@/components/ui/badge"
+import { Card, CardPanel } from "@/components/ui/card"
+
 type NetworkStatsProps = {
 	subgroupsStatus: string
 	inferenceTime: string
@@ -8,25 +11,24 @@ export function NetworkStats({
 	inferenceTime
 }: NetworkStatsProps) {
 	return (
-		<div className="w-full p-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm flex flex-col gap-1">
-			<div className="flex justify-between text-gray-600 dark:text-gray-400">
-				<span>Subgroups:</span>
-				<span
-					className={`font-mono font-semibold ${
-						subgroupsStatus === "enabled"
-							? "text-green-600 dark:text-green-400"
-							: "text-red-600 dark:text-red-400"
-					}`}
-				>
-					{subgroupsStatus}
-				</span>
-			</div>
-			<div className="flex justify-between text-gray-600 dark:text-gray-400">
-				<span>Inference:</span>
-				<span className="font-mono font-semibold text-gray-900 dark:text-gray-100">
-					{inferenceTime}
-				</span>
-			</div>
-		</div>
+		<Card className="w-full py-3">
+			<CardPanel className="flex flex-col gap-3">
+				<div className="flex justify-between items-center">
+					<span className="text-sm text-muted-foreground">Subgroups:</span>
+					<Badge
+						variant={subgroupsStatus === "enabled" ? "success" : "error"}
+						className="font-mono"
+					>
+						{subgroupsStatus}
+					</Badge>
+				</div>
+				<div className="flex justify-between items-center">
+					<span className="text-sm text-muted-foreground">Inference:</span>
+					<Badge variant="outline" className="font-mono">
+						{inferenceTime}
+					</Badge>
+				</div>
+			</CardPanel>
+		</Card>
 	)
 }

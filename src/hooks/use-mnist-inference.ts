@@ -16,7 +16,6 @@ export const useMNISTInference = () => {
 	)
 	const [inferenceTime, setInferenceTime] = useState<string>("-")
 	const [subgroupsStatus, setSubgroupsStatus] = useState<string>("-")
-	const [predictionLabel, setPredictionLabel] = useState("Predictions (-.--ms)")
 	const networkRef = useRef<Network | null>(null)
 
 	useEffect(() => {
@@ -61,7 +60,6 @@ export const useMNISTInference = () => {
 		const duration = endTime - startTime
 
 		setInferenceTime(`${duration.toFixed(2)}ms`)
-		setPredictionLabel(`Predictions (${duration.toFixed(2)}ms)`)
 
 		const maxValue = Math.max(...result)
 		const maxIndex = result.includes(maxValue) ? result.indexOf(maxValue) : 0
@@ -86,7 +84,6 @@ export const useMNISTInference = () => {
 			}))
 		)
 		setInferenceTime("-")
-		setPredictionLabel("Predictions (-.--ms)")
 	}
 
 	return {
@@ -95,7 +92,6 @@ export const useMNISTInference = () => {
 		predictions,
 		inferenceTime,
 		subgroupsStatus,
-		predictionLabel,
 		runInference,
 		resetPredictions
 	}

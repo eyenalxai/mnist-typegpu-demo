@@ -16,7 +16,6 @@ export function MNISTCanvas() {
 		predictions,
 		inferenceTime,
 		subgroupsStatus,
-		predictionLabel,
 		runInference,
 		resetPredictions
 	} = useMNISTInference()
@@ -52,7 +51,7 @@ export function MNISTCanvas() {
 			/>
 
 			<div className="flex flex-col w-full lg:w-[30%] gap-4">
-				<PredictionBars predictions={predictions} label={predictionLabel} />
+				<PredictionBars predictions={predictions} />
 				<NetworkStats
 					subgroupsStatus={subgroupsStatus}
 					inferenceTime={inferenceTime}

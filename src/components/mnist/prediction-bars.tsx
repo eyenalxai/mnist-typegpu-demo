@@ -11,7 +11,6 @@ import type { PredictionBar } from "@/lib/mnist/types"
 
 type PredictionBarsProps = {
 	predictions: PredictionBar[]
-	label: string
 }
 
 const chartConfig = {
@@ -23,7 +22,7 @@ const chartConfig = {
 	}
 } satisfies ChartConfig
 
-export function PredictionBars({ predictions, label }: PredictionBarsProps) {
+export function PredictionBars({ predictions }: PredictionBarsProps) {
 	const chartData = predictions.map((pred) => ({
 		digit: pred.label.toString(),
 		confidence: Number((pred.confidence * 100).toFixed(2)),
@@ -34,7 +33,6 @@ export function PredictionBars({ predictions, label }: PredictionBarsProps) {
 
 	return (
 		<div className="flex flex-col w-full gap-4">
-			<div className="text-center text-lg font-medium">{label}</div>
 			<ChartContainer config={chartConfig} className="min-h-[300px] w-full">
 				<BarChart accessibilityLayer data={chartData}>
 					<CartesianGrid vertical={false} />

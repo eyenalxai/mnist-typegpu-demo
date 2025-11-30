@@ -96,7 +96,7 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 				onTouchMove={handleDrawMove}
 				onTouchEnd={handleDrawEnd}
 			/>
-			<Button onClick={handleClear} variant="outline" className="mt-4 w-full">
+			<Button onClick={handleClear} variant="outline" className="mt-2 w-full">
 				Clear
 			</Button>
 		</div>

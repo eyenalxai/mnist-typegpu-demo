@@ -1,4 +1,4 @@
-import { CANVAS_SIZE, GRID_SIZE } from "@/lib/mnist/types"
+import { GRID_SIZE } from "@/lib/mnist/types"
 
 export const centerImage = (data: number[]): number[] => {
 	const mass = data.reduce((acc, value) => acc + value, 0)

@@ -10,10 +10,16 @@ import { CANVAS_SIZE } from "@/lib/mnist/types"
 type DrawingCanvasProps = {
 	ref?: React.Ref<HTMLCanvasElement>
 	onDrawEnd: () => void | Promise<void>
+	onDraw?: () => void | Promise<void>
 	onClear: () => void
 }
 
-export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
+export function DrawingCanvas({
+	ref,
+	onDrawEnd,
+	onDraw,
+	onClear
+}: DrawingCanvasProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const isDrawingRef = useRef(false)
 	const lastPosRef = useRef<{ x: number; y: number } | null>(null)
@@ -64,6 +70,10 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 		const pos = getCanvasCoordinates(canvas, e)
 		drawLine(ctx, lastPosRef.current, pos)
 		lastPosRef.current = pos
+
+		if (onDraw) {
+			void onDraw()
+		}
 	}
 
 	const handleDrawEnd = () => {

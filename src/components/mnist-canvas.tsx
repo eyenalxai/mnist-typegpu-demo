@@ -1,6 +1,7 @@
 "use client"
 
-import { useRef } from "react"
+import { throttle } from "es-toolkit/function"
+import { useCallback, useEffect, useRef } from "react"
 import { DrawingCanvas } from "@/components/mnist/drawing-canvas"
 import { PredictionBars } from "@/components/mnist/prediction-bars"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -19,7 +20,27 @@ export function MNISTCanvas() {
 		resetPredictions
 	} = useMNISTInference()
 
+	const throttledInference = useRef(
+		throttle(() => {
+			const canvas = canvasRef.current
+			if (!canvas) return
+			void runInference(canvas)
+		}, 250)
+	)
+
+	useEffect(() => {
+		const throttled = throttledInference.current
+		return () => {
+			throttled.cancel()
+		}
+	}, [])
+
+	const handleDraw = useCallback(() => {
+		throttledInference.current()
+	}, [])
+
 	const handleDrawEnd = async () => {
+		throttledInference.current.flush()
 		const canvas = canvasRef.current
 		if (!canvas) return
 		await runInference(canvas)
@@ -48,6 +69,7 @@ export function MNISTCanvas() {
 		<div className="flex flex-col gap-4 items-center justify-center max-w-2xl mx-auto">
 			<DrawingCanvas
 				ref={canvasRef}
+				onDraw={handleDraw}
 				onDrawEnd={handleDrawEnd}
 				onClear={resetPredictions}
 			/>

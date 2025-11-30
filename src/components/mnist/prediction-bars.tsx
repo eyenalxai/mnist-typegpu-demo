@@ -53,14 +53,20 @@ export function PredictionBars({
 							tickLine={false}
 							axisLine={false}
 							tickMargin={20}
-							tickFormatter={(value) => `${value}%`}
+							tickFormatter={(value) => {
+								const numValue = Number(value)
+								return `${numValue}%`
+							}}
 						/>
 						<ChartTooltip
 							content={
 								<ChartTooltipContent
 									labelKey="digit"
 									nameKey="confidence"
-									formatter={(value) => `${value}%`}
+									formatter={(value) => {
+										const numValue = Number(value)
+										return `${numValue}%`
+									}}
 								/>
 							}
 						/>

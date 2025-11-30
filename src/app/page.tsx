@@ -5,9 +5,9 @@ export default function Page() {
 		<main className="container mx-auto py-8 px-4">
 			<div className="flex flex-col gap-6">
 				<div className="flex flex-col gap-2">
-					<h1 className="text-4xl font-bold">WebGPU Demo</h1>
+					<h1 className="text-4xl font-bold">Conway&apos;s Game of Life</h1>
 					<p className="text-gray-600 dark:text-gray-400">
-						Interactive shader visualization using TypeGPU
+						GPU-accelerated cellular automaton using TypeGPU and WebGPU
 					</p>
 				</div>
 				<WebGPUCanvas />

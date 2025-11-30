@@ -44,7 +44,7 @@ export function MNISTCanvas() {
 	}
 
 	return (
-		<div className="flex flex-col lg:flex-row gap-4 items-start">
+		<div className="flex flex-col lg:flex-row gap-4 items-center justify-center">
 			<DrawingCanvas
 				ref={canvasRef}
 				onDrawEnd={handleDrawEnd}

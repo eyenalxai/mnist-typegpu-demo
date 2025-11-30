@@ -64,8 +64,7 @@ export const useMNISTInference = () => {
 		setPredictionLabel(`Predictions (${duration.toFixed(2)}ms)`)
 
 		const maxValue = Math.max(...result)
-		const maxIndex =
-			result.indexOf(maxValue) === -1 ? 0 : result.indexOf(maxValue)
+		const maxIndex = result.includes(maxValue) ? result.indexOf(maxValue) : 0
 
 		const softmax = computeSoftmax(result)
 

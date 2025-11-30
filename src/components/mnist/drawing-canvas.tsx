@@ -8,7 +8,7 @@ import { CANVAS_SIZE } from "@/lib/mnist/types"
 
 type DrawingCanvasProps = {
 	ref?: React.Ref<HTMLCanvasElement>
-	onDrawEnd: () => void
+	onDrawEnd: () => void | Promise<void>
 	onClear: () => void
 }
 
@@ -25,8 +25,8 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 		if (ref) {
 			if (typeof ref === "function") {
 				ref(canvas)
-			} else {
-				;(ref as React.MutableRefObject<HTMLCanvasElement>).current = canvas
+			} else if ("current" in ref) {
+				ref.current = canvas
 			}
 		}
 	}, [ref])
@@ -65,12 +65,12 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 		lastPosRef.current = pos
 	}
 
-	const handleDrawEnd = async () => {
+	const handleDrawEnd = () => {
 		if (!isDrawingRef.current) return
 		isDrawingRef.current = false
 		lastPosRef.current = null
 
-		await onDrawEnd()
+		void onDrawEnd()
 	}
 
 	const handleClear = () => {

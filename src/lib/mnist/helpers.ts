@@ -31,8 +31,10 @@ function getLayerData(layer: ArrayBuffer): {
 	const data = new Float32Array(layer.slice(10 + headerLen[0]))
 
 	// Verify the length of the data matches the shape
-	if (data.length !== shape[0] * (shape[1] || 1)) {
-		throw new Error(`Data length ${data.length} does not match shape ${shape}`)
+	if (data.length !== shape[0] * (shape[1] ?? 1)) {
+		throw new Error(
+			`Data length ${data.length} does not match shape ${JSON.stringify(shape)}`
+		)
 	}
 
 	return {
@@ -41,13 +43,12 @@ function getLayerData(layer: ArrayBuffer): {
 	}
 }
 
-export function downloadLayers(
+export async function downloadLayers(
 	root: TgpuRoot
 ): Promise<[LayerData, LayerData][]> {
 	const downloadLayer = async (fileName: string): Promise<LayerData> => {
-		const buffer = await fetch(
-			`/TypeGPU/assets/mnist-weights/${fileName}`
-		).then((res) => res.arrayBuffer())
+		const response = await fetch(`/TypeGPU/assets/mnist-weights/${fileName}`)
+		const buffer = await response.arrayBuffer()
 
 		const { shape, data } = getLayerData(buffer)
 
@@ -62,7 +63,7 @@ export function downloadLayers(
 	}
 
 	return Promise.all(
-		[0, 1, 2, 3, 4, 5, 6, 7].map((layer) =>
+		[0, 1, 2, 3, 4, 5, 6, 7].map(async (layer) =>
 			Promise.all([
 				downloadLayer(`layer${layer}.weight.npy`),
 				downloadLayer(`layer${layer}.bias.npy`)

@@ -58,7 +58,9 @@ export const initNetwork = async (): Promise<InitNetworkResult> => {
 
 	const buffers = layersData.map(([weights, biases]) => {
 		if (weights.shape[1] !== biases.shape[0]) {
-			throw new Error(`Shape mismatch: ${weights.shape} and ${biases.shape}`)
+			throw new Error(
+				`Shape mismatch: ${JSON.stringify(weights.shape)} and ${JSON.stringify(biases.shape)}`
+			)
 		}
 
 		return {
@@ -106,7 +108,7 @@ export const initNetwork = async (): Promise<InitNetworkResult> => {
 			boundPipeline.dispatchWorkgroups(buffers[i].biases.dataType.elementCount)
 		}
 
-		return await output.read()
+		return output.read()
 	}
 
 	const network: Network = {

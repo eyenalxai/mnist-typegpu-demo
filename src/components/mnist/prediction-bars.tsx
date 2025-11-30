@@ -38,9 +38,9 @@ export function PredictionBars({
 	}))
 
 	return (
-		<Card className="w-full">
-			<CardPanel className="flex flex-col gap-4">
-				<ChartContainer config={chartConfig} className="min-h-[300px] w-full">
+		<Card className="w-full py-4 px-0">
+			<CardPanel className="flex flex-col gap-4 p-0">
+				<ChartContainer config={chartConfig} className="w-full">
 					<BarChart accessibilityLayer data={chartData}>
 						<CartesianGrid vertical={false} />
 						<XAxis
@@ -52,7 +52,7 @@ export function PredictionBars({
 						<YAxis
 							tickLine={false}
 							axisLine={false}
-							tickMargin={10}
+							tickMargin={20}
 							tickFormatter={(value) => `${value}%`}
 						/>
 						<ChartTooltip
@@ -68,7 +68,7 @@ export function PredictionBars({
 					</BarChart>
 				</ChartContainer>
 
-				<div className="flex items-center justify-between gap-4 pt-2 border-t text-xs">
+				<div className="flex items-center justify-between gap-4 pt-4 px-4 border-t text-xs">
 					<div className="flex items-center gap-2">
 						<span className="text-muted-foreground">Subgroups:</span>
 						<Badge

@@ -38,7 +38,11 @@ export function MNISTCanvas() {
 	}
 
 	if (isLoading) {
-		return <Spinner className="size-8" />
+		return (
+			<div className="flex items-center justify-center h-full gap-x-2">
+				<Spinner /> <span>Loading models</span>
+			</div>
+		)
 	}
 
 	return (
@@ -48,7 +52,6 @@ export function MNISTCanvas() {
 				onDrawEnd={handleDrawEnd}
 				onClear={resetPredictions}
 			/>
-
 			<PredictionBars
 				predictions={predictions}
 				subgroupsStatus={subgroupsStatus}

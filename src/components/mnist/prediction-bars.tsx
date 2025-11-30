@@ -1,3 +1,12 @@
+"use client"
+
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import {
+	type ChartConfig,
+	ChartContainer,
+	ChartTooltip,
+	ChartTooltipContent
+} from "@/components/ui/shadcn/chart"
 import type { PredictionBar } from "@/lib/mnist/types"
 
 type PredictionBarsProps = {
@@ -5,36 +14,54 @@ type PredictionBarsProps = {
 	label: string
 }
 
-export function PredictionBars({ predictions, label }: PredictionBarsProps) {
-	return (
-		<div className="flex flex-col w-full items-center justify-center p-2 gap-4">
-			<div className="mb-2 text-xl">{label}</div>
+const chartConfig = {
+	confidence: {
+		label: "Confidence"
+	},
+	digit: {
+		label: "Digit"
+	}
+} satisfies ChartConfig
 
-			<div className="flex flex-col w-full justify-start gap-1">
-				{predictions.map((pred) => (
-					<div
-						key={pred.label}
-						className="relative h-5 w-full font-mono text-base bg-linear-to-r from-transparent to-[#e6e6f2] rounded-full"
-					>
-						<div
-							className="absolute h-full left-8 rounded-full bg-[#dadaed] transition-all duration-200 ease-in-out"
-							style={{
-								width: `calc((100% - 2rem) * ${pred.confidence})`
-							}}
-						/>
-						<div
-							className="absolute h-full left-8 rounded-full bg-linear-to-r from-[#c464ff] to-[#1d72f0] transition-all duration-200 ease-in-out"
-							style={{
-								width: `calc((100% - 2rem) * ${pred.confidence})`,
-								opacity: pred.isHighlighted ? 1 : 0
-							}}
-						/>
-						<span className="absolute left-2 top-0 leading-5">
-							{pred.label}
-						</span>
-					</div>
-				))}
-			</div>
+export function PredictionBars({ predictions, label }: PredictionBarsProps) {
+	const chartData = predictions.map((pred) => ({
+		digit: pred.label.toString(),
+		confidence: Number((pred.confidence * 100).toFixed(2)),
+		fill: pred.isHighlighted
+			? "hsl(var(--chart-1))"
+			: "hsl(var(--muted-foreground))"
+	}))
+
+	return (
+		<div className="flex flex-col w-full gap-4">
+			<div className="text-center text-lg font-medium">{label}</div>
+			<ChartContainer config={chartConfig} className="min-h-[300px] w-full">
+				<BarChart accessibilityLayer data={chartData}>
+					<CartesianGrid vertical={false} />
+					<XAxis
+						dataKey="digit"
+						tickLine={false}
+						tickMargin={10}
+						axisLine={false}
+					/>
+					<YAxis
+						tickLine={false}
+						axisLine={false}
+						tickMargin={10}
+						tickFormatter={(value) => `${value}%`}
+					/>
+					<ChartTooltip
+						content={
+							<ChartTooltipContent
+								labelKey="digit"
+								nameKey="confidence"
+								formatter={(value) => `${value}%`}
+							/>
+						}
+					/>
+					<Bar dataKey="confidence" radius={4} />
+				</BarChart>
+			</ChartContainer>
 		</div>
 	)
 }

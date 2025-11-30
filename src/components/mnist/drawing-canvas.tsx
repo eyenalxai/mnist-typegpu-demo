@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { Button } from "@/components/ui/button"
 import {
 	clearCanvas,
 	drawLine,
@@ -86,7 +87,7 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 				ref={canvasRef}
 				width={CANVAS_SIZE}
 				height={CANVAS_SIZE}
-				className="border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg cursor-crosshair touch-none"
+				className="border border-border rounded-lg shadow-lg cursor-crosshair touch-none"
 				onMouseDown={handleDrawStart}
 				onMouseMove={handleDrawMove}
 				onMouseUp={handleDrawEnd}
@@ -95,13 +96,9 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 				onTouchMove={handleDrawMove}
 				onTouchEnd={handleDrawEnd}
 			/>
-			<button
-				type="button"
-				onClick={handleClear}
-				className="mt-4 w-full px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
-			>
+			<Button onClick={handleClear} className="mt-4 w-full">
 				Clear
-			</button>
+			</Button>
 		</div>
 	)
 }

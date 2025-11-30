@@ -34,9 +34,7 @@ export function PredictionBars({
 	const chartData = predictions.map((pred) => ({
 		digit: pred.label.toString(),
 		confidence: Number((pred.confidence * 100).toFixed(2)),
-		fill: pred.isHighlighted
-			? "hsl(var(--chart-1))"
-			: "hsl(var(--muted-foreground))"
+		fill: pred.isHighlighted ? "var(--chart-5)" : "var(--muted-foreground)"
 	}))
 
 	return (
@@ -70,19 +68,19 @@ export function PredictionBars({
 					</BarChart>
 				</ChartContainer>
 
-				<div className="flex flex-col gap-3 pt-2 border-t">
-					<div className="flex justify-between items-center">
-						<span className="text-sm text-muted-foreground">Subgroups:</span>
+				<div className="flex items-center justify-between gap-4 pt-2 border-t text-xs">
+					<div className="flex items-center gap-2">
+						<span className="text-muted-foreground">Subgroups:</span>
 						<Badge
 							variant={subgroupsStatus === "enabled" ? "success" : "error"}
-							className="font-mono"
+							className="font-mono text-xs"
 						>
 							{subgroupsStatus}
 						</Badge>
 					</div>
-					<div className="flex justify-between items-center">
-						<span className="text-sm text-muted-foreground">Inference:</span>
-						<Badge variant="outline" className="font-mono">
+					<div className="flex items-center gap-2">
+						<span className="text-muted-foreground">Inference:</span>
+						<Badge variant="outline" className="font-mono text-xs">
 							{inferenceTime}
 						</Badge>
 					</div>

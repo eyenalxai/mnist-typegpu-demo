@@ -51,6 +51,7 @@ export function PredictionBars({
 							tickLine={false}
 							axisLine={false}
 							tickMargin={20}
+							domain={[0, 100]}
 							tickFormatter={(value) => {
 								const numValue = Number(value)
 								return `${numValue}%`

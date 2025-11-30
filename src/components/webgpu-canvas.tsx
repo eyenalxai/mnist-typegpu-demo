@@ -58,8 +58,10 @@ type WebGPUContext = {
 	device: GPUDevice
 	context: GPUCanvasContext
 	pipeline: GPURenderPipeline
-	spanBuffer: unknown
-	bindGroup: unknown
+	spanBuffer: ReturnType<Awaited<ReturnType<typeof tgpu.init>>["createBuffer"]>
+	bindGroup: ReturnType<
+		Awaited<ReturnType<typeof tgpu.init>>["createBindGroup"]
+	>
 }
 
 export function WebGPUCanvas() {
@@ -71,7 +73,7 @@ export function WebGPUCanvas() {
 	const gpuContextRef = useRef<WebGPUContext | null>(null)
 
 	useEffect(() => {
-		if (!navigator.gpu) {
+		if (typeof navigator === "undefined" || !navigator.gpu) {
 			setIsSupported(false)
 			return
 		}
@@ -147,7 +149,7 @@ export function WebGPUCanvas() {
 			}
 		}
 
-		initWebGPU()
+		void initWebGPU()
 
 		return () => {
 			mounted = false
@@ -178,14 +180,12 @@ export function WebGPUCanvas() {
 				]
 			}
 
-			// @ts-expect-error - TypeGPU buffer types are complex
 			spanBuffer.write({ x: spanXValue, y: spanYValue })
 
 			const commandEncoder = device.createCommandEncoder()
 			const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor)
 
 			passEncoder.setPipeline(pipeline)
-			// @ts-expect-error - TypeGPU bindGroup types are complex
 			passEncoder.setBindGroup(0, root.unwrap(bindGroup))
 			passEncoder.draw(4)
 			passEncoder.end()

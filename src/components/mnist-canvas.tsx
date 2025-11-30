@@ -42,20 +42,18 @@ export function MNISTCanvas() {
 	}
 
 	return (
-		<div className="flex flex-col lg:flex-row gap-4 items-center justify-center">
+		<div className="flex flex-col gap-4 items-center justify-center max-w-2xl mx-auto">
 			<DrawingCanvas
 				ref={canvasRef}
 				onDrawEnd={handleDrawEnd}
 				onClear={resetPredictions}
 			/>
 
-			<div className="flex flex-col w-full lg:w-[30%]">
-				<PredictionBars
-					predictions={predictions}
-					subgroupsStatus={subgroupsStatus}
-					inferenceTime={inferenceTime}
-				/>
-			</div>
+			<PredictionBars
+				predictions={predictions}
+				subgroupsStatus={subgroupsStatus}
+				inferenceTime={inferenceTime}
+			/>
 		</div>
 	)
 }

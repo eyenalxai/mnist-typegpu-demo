@@ -12,7 +12,16 @@ export const initNetwork = async () => {
 	})
 
 	const hasSubgroups = root.enabledFeatures.has("subgroups")
-	const layersData = await downloadLayers(root)
+	const layersDataResult = await downloadLayers(root)
+
+	if (layersDataResult.isErr()) {
+		const error = layersDataResult.error
+		throw new Error(
+			`Failed to download layers: ${error.type} - ${error.fileName}: ${error.message}`
+		)
+	}
+
+	const layersData = layersDataResult.value
 
 	const relu = tgpu.fn(
 		[d.f32],

@@ -1,4 +1,4 @@
-import { CANVAS_SIZE } from "@/lib/mnist/types"
+import { GRID_SIZE } from "@/lib/mnist/types"
 
 export const drawLine = (
 	ctx: CanvasRenderingContext2D,
@@ -6,7 +6,7 @@ export const drawLine = (
 	to: { x: number; y: number }
 ) => {
 	ctx.strokeStyle = "white"
-	ctx.lineWidth = 20
+	ctx.lineWidth = 2
 	ctx.lineCap = "round"
 	ctx.lineJoin = "round"
 	ctx.beginPath()
@@ -20,7 +20,7 @@ export const clearCanvas = (canvas: HTMLCanvasElement) => {
 	if (!ctx) return
 
 	ctx.fillStyle = "black"
-	ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+	ctx.fillRect(0, 0, GRID_SIZE, GRID_SIZE)
 }
 
 export const getCanvasCoordinates = (
@@ -32,7 +32,7 @@ export const getCanvasCoordinates = (
 	const clientY = "touches" in e ? e.touches[0].clientY : e.clientY
 
 	return {
-		x: ((clientX - rect.left) / rect.width) * CANVAS_SIZE,
-		y: ((clientY - rect.top) / rect.height) * CANVAS_SIZE
+		x: ((clientX - rect.left) / rect.width) * GRID_SIZE,
+		y: ((clientY - rect.top) / rect.height) * GRID_SIZE
 	}
 }

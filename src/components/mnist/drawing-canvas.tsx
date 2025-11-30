@@ -85,9 +85,14 @@ export function DrawingCanvas({ ref, onDrawEnd, onClear }: DrawingCanvasProps) {
 		<div className="relative">
 			<canvas
 				ref={canvasRef}
-				width={CANVAS_SIZE}
-				height={CANVAS_SIZE}
+				width={28}
+				height={28}
 				className="border border-border rounded-lg shadow-lg cursor-crosshair touch-none"
+				style={{
+					width: `${CANVAS_SIZE}px`,
+					height: `${CANVAS_SIZE}px`,
+					imageRendering: "pixelated"
+				}}
 				onMouseDown={handleDrawStart}
 				onMouseMove={handleDrawMove}
 				onMouseUp={handleDrawEnd}

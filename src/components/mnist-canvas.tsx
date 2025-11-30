@@ -243,6 +243,36 @@ export function MNISTCanvas() {
 		await runInference()
 	}
 
+	const centerImage = (data: number[]): number[] => {
+		const mass = data.reduce((acc, value) => acc + value, 0)
+		if (mass === 0) return data
+
+		const x =
+			data.reduce((acc, value, i) => acc + value * (i % GRID_SIZE), 0) / mass
+		const y =
+			data.reduce(
+				(acc, value, i) => acc + value * Math.floor(i / GRID_SIZE),
+				0
+			) / mass
+
+		const offsetX = Math.round(GRID_SIZE / 2 - x)
+		const offsetY = Math.round(GRID_SIZE / 2 - y)
+
+		const newData = Array.from({ length: GRID_SIZE * GRID_SIZE }, () => 0)
+
+		for (let i = 0; i < GRID_SIZE; i++) {
+			for (let j = 0; j < GRID_SIZE; j++) {
+				const index = i * GRID_SIZE + j
+				const newIndex = (i + offsetY) * GRID_SIZE + j + offsetX
+				if (newIndex >= 0 && newIndex < GRID_SIZE * GRID_SIZE) {
+					newData[newIndex] = data[index]
+				}
+			}
+		}
+
+		return newData
+	}
+
 	const runInference = async () => {
 		const canvas = canvasRef.current
 		const network = networkRef.current
@@ -270,12 +300,15 @@ export function MNISTCanvas() {
 					}
 				}
 
-				downscaled[y * GRID_SIZE + x] = sum / count / 255
+				downscaled[y * GRID_SIZE + x] = sum / count
 			}
 		}
 
+		const centered = centerImage(Array.from(downscaled))
+		const normalized = centered.map((x) => (x / 255) * 3.24 - 0.42)
+
 		const startTime = performance.now()
-		const result = await network.inference(Array.from(downscaled))
+		const result = await network.inference(normalized)
 		const endTime = performance.now()
 		const duration = endTime - startTime
 

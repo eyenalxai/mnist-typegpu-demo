@@ -73,7 +73,7 @@ export function WebGPUCanvas() {
 	const gpuContextRef = useRef<WebGPUContext | null>(null)
 
 	useEffect(() => {
-		if (typeof navigator === "undefined" || !navigator.gpu) {
+		if (typeof navigator === "undefined" || navigator.gpu === undefined) {
 			setIsSupported(false)
 			return
 		}

@@ -1,5 +1,3 @@
-"use client"
-
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardPanel } from "@/components/ui/card"
@@ -21,11 +19,11 @@ const chartConfig = {
 	}
 } satisfies ChartConfig
 
-export function PredictionBars({
+export const PredictionBars = ({
 	predictions,
 	subgroupsStatus,
 	inferenceTime
-}: PredictionBarsProps) {
+}: PredictionBarsProps) => {
 	const chartData = predictions.map((pred) => ({
 		digit: pred.label.toString(),
 		confidence: Number((pred.confidence * 100).toFixed(2)),

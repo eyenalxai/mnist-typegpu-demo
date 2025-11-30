@@ -1,4 +1,4 @@
-import { GRID_SIZE } from "@/lib/mnist/types"
+import { GRID_SIZE } from "@/lib/constants"
 
 export const drawLine = (
 	ctx: CanvasRenderingContext2D,
@@ -26,7 +26,7 @@ export const clearCanvas = (canvas: HTMLCanvasElement) => {
 export const getCanvasCoordinates = (
 	canvas: HTMLCanvasElement,
 	e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-): { x: number; y: number } => {
+) => {
 	const rect = canvas.getBoundingClientRect()
 	const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
 	const clientY = "touches" in e ? e.touches[0].clientY : e.clientY

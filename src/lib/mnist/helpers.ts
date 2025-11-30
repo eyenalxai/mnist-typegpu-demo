@@ -1,36 +1,25 @@
-// oxlint-disable catch-or-return
 import type { TgpuRoot } from "typegpu"
 import * as d from "typegpu/data"
 import type { LayerData } from "@/lib/mnist/data"
 
-/**
- * The function extracts the header, shape and data from the layer
- * If there are any issues with the layer, an error is thrown
- */
-function getLayerData(layer: ArrayBuffer): {
-	shape: readonly [number] | readonly [number, number]
-	data: Float32Array
-} {
+const getLayerData = (layer: ArrayBuffer) => {
 	const headerLen = new Uint16Array(layer.slice(8, 10))
 
 	const header = new TextDecoder().decode(
 		new Uint8Array(layer.slice(10, 10 + headerLen[0]))
 	)
 
-	// shape can be found in the header in the format: 'shape': (x, y) or 'shape': (x,) for bias
 	const shapeMatch = header.match(/'shape': \((\d+), ?(\d+)?\)/)
 	if (!shapeMatch) {
 		throw new Error("Shape not found in header")
 	}
 
-	// To accommodate .npy weirdness - if we have a 2d shape we need to switch the order
 	const X = Number.parseInt(shapeMatch[1], 10)
 	const Y = Number.parseInt(shapeMatch[2], 10)
 	const shape = Number.isNaN(Y) ? ([X] as const) : ([Y, X] as const)
 
 	const data = new Float32Array(layer.slice(10 + headerLen[0]))
 
-	// Verify the length of the data matches the shape
 	if (data.length !== shape[0] * (shape[1] ?? 1)) {
 		throw new Error(
 			`Data length ${data.length} does not match shape ${JSON.stringify(shape)}`
@@ -43,9 +32,7 @@ function getLayerData(layer: ArrayBuffer): {
 	}
 }
 
-export async function downloadLayers(
-	root: TgpuRoot
-): Promise<[LayerData, LayerData][]> {
+export const downloadLayers = async (root: TgpuRoot) => {
 	const downloadLayer = async (fileName: string): Promise<LayerData> => {
 		const response = await fetch(`/TypeGPU/assets/mnist-weights/${fileName}`)
 		const buffer = await response.arrayBuffer()

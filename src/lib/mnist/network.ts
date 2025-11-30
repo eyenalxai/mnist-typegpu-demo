@@ -4,12 +4,7 @@ import * as std from "typegpu/std"
 import { ioLayout, type Network, weightsBiasesLayout } from "@/lib/mnist/data"
 import { downloadLayers } from "@/lib/mnist/helpers"
 
-export type InitNetworkResult = {
-	network: Network
-	hasSubgroups: boolean
-}
-
-export const initNetwork = async (): Promise<InitNetworkResult> => {
+export const initNetwork = async () => {
 	const root = await tgpu.init({
 		device: {
 			optionalFeatures: ["timestamp-query", "subgroups"]

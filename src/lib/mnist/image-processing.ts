@@ -1,6 +1,6 @@
-import { GRID_SIZE } from "@/lib/mnist/types"
+import { GRID_SIZE } from "@/lib/constants"
 
-export const centerImage = (data: number[]): number[] => {
+export const centerImage = (data: number[]) => {
 	const mass = data.reduce((acc, value) => acc + value, 0)
 	if (mass === 0) return data
 
@@ -28,7 +28,7 @@ export const centerImage = (data: number[]): number[] => {
 	return newData
 }
 
-export const downscaleCanvas = (canvas: HTMLCanvasElement): Float32Array => {
+export const downscaleCanvas = (canvas: HTMLCanvasElement) => {
 	const ctx = canvas.getContext("2d")
 	if (!ctx) return new Float32Array(GRID_SIZE * GRID_SIZE)
 
@@ -42,13 +42,13 @@ export const downscaleCanvas = (canvas: HTMLCanvasElement): Float32Array => {
 	return downscaled
 }
 
-export const preprocessImage = (canvas: HTMLCanvasElement): number[] => {
+export const preprocessImage = (canvas: HTMLCanvasElement) => {
 	const downscaled = downscaleCanvas(canvas)
 	const centered = centerImage(Array.from(downscaled))
 	return centered.map((x) => (x / 255) * 3.24 - 0.42)
 }
 
-export const computeSoftmax = (logits: number[]): number[] => {
+export const computeSoftmax = (logits: number[]) => {
 	const total = logits.reduce((sum, val) => sum + Math.exp(val), 0)
 	return logits.map((val) => Math.exp(val) / total)
 }

@@ -6,10 +6,10 @@ type NetworkStatsProps = {
 	inferenceTime: string
 }
 
-export function NetworkStats({
+export const NetworkStats = ({
 	subgroupsStatus,
 	inferenceTime
-}: NetworkStatsProps) {
+}: NetworkStatsProps) => {
 	return (
 		<Card className="w-full py-3">
 			<CardPanel className="flex flex-col gap-3">

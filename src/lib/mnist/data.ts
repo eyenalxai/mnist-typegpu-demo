@@ -21,18 +21,18 @@ export const weightsBiasesLayout = tgpu.bindGroupLayout({
 	biases: ReadonlyFloats
 })
 
-export interface LayerData {
+export type LayerData = {
 	shape: readonly [number] | readonly [number, number]
 	buffer: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag
 }
 
-export interface Layer {
+export type Layer = {
 	weights: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag
 	biases: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag
 	state: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag
 }
 
-export interface Network {
+export type Network = {
 	layers: Layer[]
 	input: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag
 	output: TgpuBuffer<d.WgslArray<d.F32>> & StorageFlag

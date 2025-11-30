@@ -1,11 +1,13 @@
+"use client"
+
 import { useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
+import { CANVAS_SIZE } from "@/lib/constants"
 import {
 	clearCanvas,
 	drawLine,
 	getCanvasCoordinates
 } from "@/lib/mnist/canvas-utils"
-import { CANVAS_SIZE } from "@/lib/mnist/types"
 
 type DrawingCanvasProps = {
 	ref?: React.Ref<HTMLCanvasElement>
@@ -14,12 +16,12 @@ type DrawingCanvasProps = {
 	onClear: () => void
 }
 
-export function DrawingCanvas({
+export const DrawingCanvas = ({
 	ref,
 	onDrawEnd,
 	onDraw,
 	onClear
-}: DrawingCanvasProps) {
+}: DrawingCanvasProps) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const isDrawingRef = useRef(false)
 	const lastPosRef = useRef<{ x: number; y: number } | null>(null)

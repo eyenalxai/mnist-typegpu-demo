@@ -8,7 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Spinner } from "@/components/ui/spinner"
 import { useMNISTInference } from "@/hooks/use-mnist-inference"
 
-export function MNISTCanvas() {
+export const MNISTCanvas = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const {
 		isLoading,

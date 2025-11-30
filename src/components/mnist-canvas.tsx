@@ -6,7 +6,6 @@ import { PredictionBars } from "@/components/mnist/prediction-bars"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Spinner } from "@/components/ui/spinner"
 import { useMNISTInference } from "@/hooks/use-mnist-inference"
-import { NetworkStats } from "./mnist/network-stats"
 
 export function MNISTCanvas() {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -50,9 +49,9 @@ export function MNISTCanvas() {
 				onClear={resetPredictions}
 			/>
 
-			<div className="flex flex-col w-full lg:w-[30%] gap-4">
-				<PredictionBars predictions={predictions} />
-				<NetworkStats
+			<div className="flex flex-col w-full lg:w-[30%]">
+				<PredictionBars
+					predictions={predictions}
 					subgroupsStatus={subgroupsStatus}
 					inferenceTime={inferenceTime}
 				/>

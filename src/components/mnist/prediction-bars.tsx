@@ -3,12 +3,7 @@
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardPanel } from "@/components/ui/card"
-import {
-	type ChartConfig,
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent
-} from "@/components/ui/shadcn/chart"
+import { type ChartConfig, ChartContainer } from "@/components/ui/shadcn/chart"
 import type { PredictionBar } from "@/lib/mnist/types"
 
 type PredictionBarsProps = {
@@ -40,7 +35,10 @@ export function PredictionBars({
 	return (
 		<Card className="w-full py-4 px-0">
 			<CardPanel className="flex flex-col gap-4 p-0">
-				<ChartContainer config={chartConfig} className="w-full">
+				<ChartContainer
+					config={chartConfig}
+					className="w-full pointer-events-none"
+				>
 					<BarChart accessibilityLayer data={chartData}>
 						<CartesianGrid vertical={false} />
 						<XAxis
@@ -57,18 +55,6 @@ export function PredictionBars({
 								const numValue = Number(value)
 								return `${numValue}%`
 							}}
-						/>
-						<ChartTooltip
-							content={
-								<ChartTooltipContent
-									labelKey="digit"
-									nameKey="confidence"
-									formatter={(value) => {
-										const numValue = Number(value)
-										return `${numValue}%`
-									}}
-								/>
-							}
 						/>
 						<Bar dataKey="confidence" radius={4} />
 					</BarChart>

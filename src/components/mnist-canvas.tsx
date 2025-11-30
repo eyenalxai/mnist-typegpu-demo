@@ -4,7 +4,7 @@ import { useRef } from "react"
 import { DrawingCanvas } from "@/components/mnist/drawing-canvas"
 import { PredictionBars } from "@/components/mnist/prediction-bars"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Card, CardPanel } from "@/components/ui/card"
+import { Spinner } from "@/components/ui/spinner"
 import { useMNISTInference } from "@/hooks/use-mnist-inference"
 import { NetworkStats } from "./mnist/network-stats"
 
@@ -40,13 +40,7 @@ export function MNISTCanvas() {
 	}
 
 	if (isLoading) {
-		return (
-			<Card>
-				<CardPanel className="flex items-center justify-center p-8 text-2xl">
-					🤖 Downloading the model...
-				</CardPanel>
-			</Card>
-		)
+		return <Spinner className="size-8" />
 	}
 
 	return (

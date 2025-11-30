@@ -32,27 +32,11 @@ export const downscaleCanvas = (canvas: HTMLCanvasElement): Float32Array => {
 	const ctx = canvas.getContext("2d")
 	if (!ctx) return new Float32Array(GRID_SIZE * GRID_SIZE)
 
-	const imageData = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+	const imageData = ctx.getImageData(0, 0, GRID_SIZE, GRID_SIZE)
 	const downscaled = new Float32Array(GRID_SIZE * GRID_SIZE)
 
-	const scale = CANVAS_SIZE / GRID_SIZE
-	for (let y = 0; y < GRID_SIZE; y++) {
-		for (let x = 0; x < GRID_SIZE; x++) {
-			let sum = 0
-			let count = 0
-
-			for (let dy = 0; dy < scale; dy++) {
-				for (let dx = 0; dx < scale; dx++) {
-					const sx = Math.floor(x * scale + dx)
-					const sy = Math.floor(y * scale + dy)
-					const idx = (sy * CANVAS_SIZE + sx) * 4
-					sum += imageData.data[idx]
-					count++
-				}
-			}
-
-			downscaled[y * GRID_SIZE + x] = sum / count
-		}
+	for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+		downscaled[i] = imageData.data[i * 4]
 	}
 
 	return downscaled

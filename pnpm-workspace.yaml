@@ -1,0 +1,11 @@
+minimumReleaseAge: 7200 # 5 days
+
+onlyBuiltDependencies:
+  - "@prisma/client"
+  - "@prisma/engines"
+  - better-sqlite3
+  - esbuild
+  - msw
+  - prisma
+  - sharp
+  - unrs-resolver

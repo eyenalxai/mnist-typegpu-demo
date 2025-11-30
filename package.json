@@ -60,5 +60,9 @@
 		"overrides": {
 			"estree-walker": "2.0.2"
 		}
+	},
+	"engines": {
+		"node": "24",
+		"pnpm": "10"
 	}
 }

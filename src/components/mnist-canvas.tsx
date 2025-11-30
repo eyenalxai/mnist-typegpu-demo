@@ -30,8 +30,7 @@ export function MNISTCanvas() {
 			<Alert variant="error">
 				<AlertTitle>WebGPU Not Supported</AlertTitle>
 				<AlertDescription>
-					Your browser does not support WebGPU. Please use a compatible browser
-					like Chrome or Edge.
+					Your browser does not support WebGPU :(
 				</AlertDescription>
 			</Alert>
 		)

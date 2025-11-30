@@ -10,6 +10,7 @@ const extractDomain = (url: string) => {
 const nextConfig: NextConfig = {
 	transpilePackages: ["geist"],
 	allowedDevOrigins: [extractDomain(env.NEXT_PUBLIC_APP_URL)],
+	reactCompiler: true,
 	webpack: (config) => {
 		config.plugins.push(typegpuPlugin({}))
 		return config
